@@ -1,0 +1,281 @@
+NUEVO PROYECTO
+rails new agpackaging -d postgresql
+cd YUNGAS
+
+git config --global --add safe.directory /home/mdiaz/Proyectos/agpackaging
+git remote add origin https://github.com/marioadiaz/agpackaging.git
+
+git add .
+git commit -m "inicio de proyecto"
+git checkout -b master
+git push -u origin master
+
+yarn add @fortawesome/fontawesome-free
+
+Configuracion de bootstrap
+
+1.-Archvo gemfile agregar
+  # bootstrap 5
+  gem "bootstrap"
+  # Use Sass to process CSS
+  gem "sassc-rails"
+
+2.-Archivo application.css cambiar por extension .scss y agregar @import "bootstrap";
+
+3.-configurar bootstrap a traves de importmap: bin/importmap pin bootstrap --download
+4.-cambiar en importmap.rb lo siguiente:
+  pin "bootstrap" # @5.2.1
+  pin "@popperjs/core", to: "@popperjs--core.js" # @2.11.6
+por
+  pin "bootstrap", to: "bootstrap.min.js", preload:true
+  pin "popper", to: "popper.js", preload:true
+5.-agregar en assets.rb lo siguiente:
+  Rails.application.config.assets.precompile += %w(bootstrap.min.js.popper.js)
+
+6.- agregar actioncable en Gemfile
+  gem 'actioncable', '~> 7.0'
+  gem install actioncable -v 7.0.0
+
+7.- Agregar en application.js
+  import "popper"
+  import "bootstrap"
+
+8.- agregar en manifest.js
+  //= link bootstrap.min.js
+  //= link popper.js
+
+9.- Crear base de datos y demas
+
+rails db:create
+
+Autenticación con Devise
+Es una gema que facilita la implementación de la autenticación en nuestras aplicaciones.
+Los pasos para configurar  son los siguientes:
+1.-Agregar la gema al Gemfile: gem 'devise'
+2.-Ejecuta bundle install para instalarla.
+3.-Ejecuta el generador de :rails generate devise:install
+4.-El siguiente paso es crear el modelo de o de los usuarios de la aplicación, generalmente User:rails generate devise User
+5.-Ejecuta rails db:migrate para correr las migraciones.
+
+Modificando las vistas
+1.-rails generate devise:views
+Generar controladores
+2.-rails generate devise:controllers users
+Agregar en routes.rb
+3.-devise_for :users, :controllers => { registrations: 'users/registrations' }
+
+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
+
+[Simple Form] Simple Form is not configured in the application and will use the default values. Use `rails generate simple_form:install` to generate the Simple Form configuration.
+      create  config/initializers/devise.rb
+      create  config/locales/devise.en.yml
+===============================================================================
+
+Depending on your application's configuration some manual setup may be required:
+
+  1. Ensure you have defined default url options in your environments files. Here
+     is an example of default_url_options appropriate for a development environment
+     in config/environments/development.rb:
+
+       config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+     In production, :host should be set to the actual host of your application.
+
+     * Required for all applications. *
+
+  2. Ensure you have defined root_url to *something* in your config/routes.rb.
+     For example:
+
+       root to: "home#index"
+     
+     * Not required for API-only Applications *
+
+  3. Ensure you have flash messages in app/views/layouts/application.html.erb.
+     For example:
+
+       <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p>
+
+     * Not required for API-only Applications *
+
+  4. You can copy Devise views (for customization) to your app by running:
+
+       rails g devise:views
+       
+     * Not required *
+
+===============================================================================
+
+
+ROLES DE USUARIOS EN DEVISE en gemfile agregar 
+
+gem 'devise', '~> 4.8.0'
+gem 'rolify'
+gem 'simple_form'
+
+rails generate simple_form:install --bootstrap
+
+bundle install
+yarn
+rails generate devise:install
+rails generate devise User
+rails generate rolify Role User
+
+routes.rb 
+  root "home#index"
+  get 'home/index'
+  get '/devise/sign_out' => 'devise/sessions#destroy'
+ rails generate devise:views
+ 
+ rails s -b 0.0.0.0 -p 3000
+
+#GENERANDO SCAFFOLDS 
+
+#TROQUELES
+  rails generate scaffold Troqueles categoria:integer numero:integer desarrollo:string medida_cerrrada:string imagen:text texto:string stock:integer baja:boolean
+
+rails generate migration AddMaquinaToTroqueles
+    add_column :troqueles, :maquina, :string
+
+
+class AddUniqueConstraintToNumeroInTroqueles < ActiveRecord::Migration[6.0] # Asegúrate de usar la versión correcta de ActiveRecord
+  def change
+    add_index :troqueles, :numero, unique: true
+  end
+end
+
+
+
+
+#JUSTIFICACIONES
+  rails generate scaffold Justificaciones
+  rails generate migration AddBajaToJustificaciones
+    add_column :justificaciones, :jus_baja, :boolean
+  rails generate migration AddTimestampsToJustificaciones
+    add_timestamps :justificaciones, default: -> { 'CURRENT_TIMESTAMP' }
+
+#NOVEDADES
+  rails generate scaffold Novedades
+  rails generate migration AddBajaToNovedades
+    add_column :novedades, :nov_baja, :boolean
+  rails generate migration AddTimestampsToNovedades
+    add_timestamps :novedades, default: -> { 'CURRENT_TIMESTAMP' }
+
+#SECTOR
+  rails generate scaffold Sector sec_codigo:string sec_descripcion:string sec_baja:boolean
+
+#EMPLEO
+  rails generate scaffold Empleo emp_codigo:string emp_descripcion:string emp_baja:boolean
+
+#CARGO
+  rails generate scaffold Cargo car_codigo:string car_descripcion:string car_baja:boolean
+
+#CATEGORIAS
+  rails generate model Category --skip-migration --table-name=categorias --force
+  rails generate scaffold_controller Category --skip --force
+
+  self.table_name = 'categorias' (es la referencia a la tabla de la base de datos)
+
+  rails generate migration AddBajaToCategorias
+    add_column :categorias, :cat_baja, :boolean
+  rails generate migration  AddTimestampsToCategorias
+    add_timestamps :categorias, default: -> { 'CURRENT_TIMESTAMP' }
+
+#PERSONAS
+  rails generate scaffold Personas
+
+  rails generate migration AddBajaToPersonas
+    add_column :personas, :baja, :boolean
+  rails generate migration  AddTimestampsToPersonas
+    add_timestamps :personas, default: -> { 'CURRENT_TIMESTAMP' }
+
+#CLAVES FORANEAS EN PERSONAS
+  rails generate migration AddSectorIdToPersonas
+    add_column :personas, :sector_id, :bigint
+
+  rails generate migration AddSectorReferenceToPersonas
+    add_foreign_key :personas, :sectors, column: :sector_id, primary_key: :id
+
+  rails generate migration AddCargoIdToPersonas
+    add_column :personas, :cargo_id, :bigint
+
+  rails generate migration AddCargoReferenceToPersonas
+    add_foreign_key :personas, :cargos, column: :cargo_id, primary_key: :id
+
+  rails generate migration AddEmpleoIdToPersonas
+    add_column :personas, :empleo_id, :bigint
+
+  rails generate migration AddEmpleosReferenceToPersonas
+    add_foreign_key :personas, :empleos, column: :empleo_id, primary_key: :id
+
+  rails generate migration AddCategoriasReferenceToPersonas
+    add_foreign_key :personas, :categorias, column: :per_categoria, primary_key: :idcategoria
+
+#FICHADAS
+  rails generate scaffold Fichadas
+  rails generate migration AddBajaToFichadas
+    add_column :fichadas, :fich_baja, :boolean
+  rails generate migration AddTimestampsToFichadas
+    add_timestamps :fichadas, default: -> { 'CURRENT_TIMESTAMP' }
+  rails generate migration AddPersonaIdToFichadas
+    add_column :fichada, :persona_id, :bigint
+
+#CLAVES FORANEAS EN FICHADAS
+  rails generate migration AddPersonasReferenceToFichadas
+    add_foreign_key :fichadas, :personas, column: :persona_id, primary_key: :idpersona
+
+#RESUMENFICHADAS
+  rails generate scaffold ResumenFichadas rf_fichada_idpersona:bigint rf_fichada_fecha:date rf_fichada_registrador:string rf_fichada_idreloj:bigint hor_entrada:integer hor_salida:integer hor_normales:integer rf_baja:boolean
+
+#CLAVES FORANEAS EN RESUMENFICHADAS
+  rails generate migration AddPersonasReferenceToResumenFichadas
+    add_foreign_key :resumen_fichadas, :personas, column: :rf_fichada_idpersona, primary_key: :idpersona
+
+#SCHEDULES
+  rails generate scaffold Schedules sch_codigo:string sch_descripcion:string sch_observacion:string sch_baja:boolean
+
+#CURRENT_SCHEDULES
+  rails generate scaffold CurrentSchedules schedule_id:bigint persona_id:bigint curr_sch_vigenciainicio:date curr_sch_vigenciafin:date curr_sch_tipo:string curr_sch_calculo:string curr_sch_tole1:integer curr_sch_tole2:integer curr_sch_tols1:integer curr_sch_tols2:integer curr_sch_pausa_descontar:string curr_sch_pausa_paga_extra:string curr_sch_cambio_dia:string curr_sch_horasfijas:string curr_sch_baja:boolean
+
+  rails generate migration AddSchedulesReferenceToCurrentSchedules
+    add_foreign_key :current_schedules, :schedules, column: :schedule_id, primary_key: :id
+
+#JOR_CORRIDAS
+  rails generate scaffold JorCorridas cschedule_id:bigint jorc_diasnum:integer jorc_diasstr:string jorc_entrada1:integer jorc_salida1:integer jorc_entrada_extra:integer jorc_salida_extra:integer jorc_pausa_entrada:integer jorc_pausa_salida:integer jorc_pausa_tiempo:integer jorc_extra1:integer jorc_extra2:integer jorc_extra3:integer jorc_baja:boolean
+
+  rails generate migration AddCurrentSchedulesReferenceToJorCorridas
+    add_foreign_key :jor_corridas, :current_schedules, column: :cschedule_id, primary_key: :id
+
+#JOR_FLEXIBLES
+  rails generate scaffold JorFlexibles cschedule_id:bigint jorf_diasnum:integer jorf_diasstr:string jorf_concepto1:integer jorf_concepto2:integer jorf_concepto3:integer jorf_cantidad1:integer jorf_cantidad2:integer jorf_cantidad3:integer jorf_entrada_tope:integer jorf_cambio_dia:integer jofr_entradaminima:integer jorf_baja:boolean
+
+  rails generate migration AddCurrentSchedulesReferenceToJorFlexibles
+    add_foreign_key :jor_flexibles, :current_schedules, column: :cschedule_id, primary_key: :id
+
+#JOR_PARTIDA
+  rails generate scaffold JorPartidas cschedule_id:bigint jorp_diasnum:integer jorp_diasstr:string jorp_entrada1:integer jorp_salida1:integer jorp_entrada2:integer jorp_salida2:integer jorp_entrada_extra:integer jorp_salida_extra:integer jorp_extra1:integer jorp_extra2:integer jorp_extra3:integer jorp_baja:boolean
+
+  rails generate migration AddCurrentSchedulesReferenceToJorPartidas
+    add_foreign_key :jor_partidas, :current_schedules, column: :cschedule_id, primary_key: :id
+
+#JORNADAS VIRTUALES
+  rails generate scaffold JorVirtuals cschedule_id:bigint jorv_vig_inicio:date jorv_vig_fin:date jorv_diasnum:integer jorv_diasstr:string jorv_concepto1:integer jorv_concepto2:integer jorv_concepto3:integer jorv_cantidad1:integer jorv_cantidad2:integer jorv_cantidad3:integer jorv_entrada_tope:integer jorv_cambio_dia:integer jofv_entradaminima:integer jorv_baja:boolean
+
+  rails generate migration AddVirtualsReferenceToJorVirtuals
+    add_foreign_key :jor_virtuals, :current_schedules, column: :cschedule_id, primary_key: :id
+#USERS
+rails generate migration AddNombreToUsers
+    add_column :users, :nombre, :string
+rails generate migration AddApellidoToUsers
+    add_column :users, :apellido, :string
+rails generate migration AddDniToUsers
+    add_column :users, :dni, :string
+rails generate migration AddBajaToUsers
+    add_column :users, :baja, :string
+rails generate migration AddCscheduleIdToUsers
+    add_column :personas, :cschedule_id, :bigint
+
+rails generate migration AddObservacionesToPersonas
+    add_column :personas, :observaciones, :string
+rails generate migration AddObservacionesToCurrentSchedules
+    add_column :current_schedules, :observaciones, :string
