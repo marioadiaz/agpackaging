@@ -70,3 +70,11 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+  # bootstrap 5
+  gem "bootstrap"
+  # Use Sass to process CSS
+  gem "sassc-rails"
+  gem 'actioncable', '~> 7.0'
+
+  gem 'activestorage'
