@@ -1,0 +1,145 @@
+NUEVO PROYECTO
+rails new agpackaging -d postgresql
+cd YUNGAS
+
+git config --global --add safe.directory /home/mdiaz/Proyectos/agpackaging
+git remote add origin https://github.com/marioadiaz/agpackaging.git
+
+git add .
+git commit -m "inicio de proyecto"
+git checkout -b master
+git push -u origin master
+
+yarn add @fortawesome/fontawesome-free
+
+Configuracion de bootstrap
+
+1.-Archvo gemfile agregar
+  # bootstrap 5
+  gem "bootstrap"
+  # Use Sass to process CSS
+  gem "sassc-rails"
+
+2.-Archivo application.css cambiar por extension .scss y agregar @import "bootstrap";
+
+3.-configurar bootstrap a traves de importmap: bin/importmap pin bootstrap --download
+4.-cambiar en importmap.rb lo siguiente:
+  pin "bootstrap" # @5.2.1
+  pin "@popperjs/core", to: "@popperjs--core.js" # @2.11.6
+por
+  pin "bootstrap", to: "bootstrap.min.js", preload:true
+  pin "popper", to: "popper.js", preload:true
+5.-agregar en assets.rb lo siguiente:
+  Rails.application.config.assets.precompile += %w(bootstrap.min.js.popper.js)
+
+6.- agregar actioncable en Gemfile
+  gem 'actioncable', '~> 7.0'
+  gem install actioncable -v 7.0.0
+
+7.- Agregar en application.js
+  import "popper"
+  import "bootstrap"
+
+8.- agregar en manifest.js
+  //= link bootstrap.min.js
+  //= link popper.js
+
+9.- Crear base de datos y demas
+
+rails db:create
+
+Autenticación con Devise
+Es una gema que facilita la implementación de la autenticación en nuestras aplicaciones.
+Los pasos para configurar  son los siguientes:
+1.-Agregar la gema al Gemfile: gem 'devise'
+2.-Ejecuta bundle install para instalarla.
+3.-Ejecuta el generador de :rails generate devise:install
+4.-El siguiente paso es crear el modelo de o de los usuarios de la aplicación, generalmente User:rails generate devise User
+5.-Ejecuta rails db:migrate para correr las migraciones.
+
+Modificando las vistas
+1.-rails generate devise:views
+Generar controladores
+2.-rails generate devise:controllers users
+Agregar en routes.rb
+3.-devise_for :users, :controllers => { registrations: 'users/registrations' }
+
+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
+
+[Simple Form] Simple Form is not configured in the application and will use the default values. Use `rails generate simple_form:install` to generate the Simple Form configuration.
+      create  config/initializers/devise.rb
+      create  config/locales/devise.en.yml
+===============================================================================
+
+Depending on your application's configuration some manual setup may be required:
+
+  1. Ensure you have defined default url options in your environments files. Here
+     is an example of default_url_options appropriate for a development environment
+     in config/environments/development.rb:
+
+       config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+     In production, :host should be set to the actual host of your application.
+
+     * Required for all applications. *
+
+  2. Ensure you have defined root_url to *something* in your config/routes.rb.
+     For example:
+
+       root to: "home#index"
+     
+     * Not required for API-only Applications *
+
+  3. Ensure you have flash messages in app/views/layouts/application.html.erb.
+     For example:
+
+       <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p>
+
+     * Not required for API-only Applications *
+
+  4. You can copy Devise views (for customization) to your app by running:
+
+       rails g devise:views
+       
+     * Not required *
+
+===============================================================================
+
+
+ROLES DE USUARIOS EN DEVISE en gemfile agregar 
+
+gem 'devise', '~> 4.8.0'
+gem 'rolify'
+gem 'simple_form'
+
+rails generate simple_form:install --bootstrap
+
+bundle install
+yarn
+rails generate devise:install
+rails generate devise User
+rails generate rolify Role User
+
+routes.rb 
+  root "home#index"
+  get 'home/index'
+  get '/devise/sign_out' => 'devise/sessions#destroy'
+ rails generate devise:views
+ 
+ rails s -b 0.0.0.0 -p 3000
+
+#GENERANDO SCAFFOLDS 
+
+#TROQUELES
+  rails destroy scaffold Troqueles
+
+  rails generate scaffold Troquels categoria:integer numero:integer desarrollo:string medida_cerrrada:string imagen:text texto:string stock:integer maquina:string baja:boolean
+
+rails generate migration AddMaquinaToTroqueles
+  add_column :troqueles, :maquina, :string
+
+rails generate migration AddUniqueConstraintToNumeroInTroqueles
+  add_index :troqueles, :numero, unique: true
+
+#rails destroy scaffold Troqueles

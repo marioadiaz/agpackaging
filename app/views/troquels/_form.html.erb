@@ -1,0 +1,63 @@
+<%= simple_form_for(@troquel) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <div class="container">
+   <div class="center-block form-inputs troquel-new-form">
+      <div class="row">
+        <div class="col-md-12">                          
+          <div class="form-group">
+            <div class="col-md-4">
+              <label for="categoria">Categoría</label>
+              <%= f.select :categoria, Troquel::CATEGORIA.invert, selected: (@troquel.categoria || 0), :label => false, autofocus: true, :input_html => { :class => "form-group"}%>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <label for="numero">Número</label>
+              <%= f.input :numero, :label => false, required: true, autofocus: true, :input_html => { :class => "form-group"}%>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <label for="desarrollo">Desarrollo</label>
+              <%= f.input :desarrollo, :label => false, required: true, autofocus: true, :input_html => { :class => "form-group"}%>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <label for="medida_cerrada">Medida Cerrada</label>
+              <%= f.input :medida_cerrada, :label => false, required: true, autofocus: true, :input_html => { :class => "form-group"}%>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <label for="imagen">Imagen</label>
+              <%= f.input :imagen, :label => false, required: true, autofocus: true, :input_html => { :class => "form-group"}%>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <label for="texto">Texto</label>
+              <%= f.input :texto, :label => false, required: true, autofocus: true, :input_html => { :class => "form-group"}%>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <label for="stock">Stock</label>
+              <%= f.input :stock, :label => false, required: true, autofocus: true, :input_html => { :class => "form-group"}%>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <label for="maquina">Máquina</label>
+              <%= f.input :maquina, :label => false, required: true, autofocus: true, :input_html => { :class => "form-group"}%>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class= "d-flex my-2">
+       <div> <%= f.button :submit,name="Confirmar",:class => "btn btn-success"  %> </div>
+      </div>
+    </div>  
+  </div>  
+<% end %>

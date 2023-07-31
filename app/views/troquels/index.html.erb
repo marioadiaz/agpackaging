@@ -1,0 +1,51 @@
+<div class="container">
+  <h2>Troqueles</h2>
+  <p style="color: green"><%= notice %></p>
+  <div class="d-flex my-2">
+    <div class="flex-grow-1">
+      <input class="form-control" id="buscador_datos" type="text" placeholder="Buscar troqueles">
+    </div>
+    <div class="ml-2 mx-2">
+      <%= link_to 'Crear Troquel', new_troquel_path, class: 'btn btn-warning' %> 
+    </div>
+  </div>
+  <script type="module">
+    $(document).ready(function(){
+    $("#buscador_datos").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#TablaOrdenesTrabajos tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+      console.log(value);
+    });
+  });
+  </script>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Codigo</th>
+        <th>Desarrollo</th>
+        <th>Medida cerrada</th>
+        <th>Imagen</th>
+        <th>Observacion</th>
+        <th>Stock</th>
+        <th>Maquina</th>
+      </tr>
+    </thead>
+    <tbody id="TablaOrdenesTrabajos">
+      <% @troquels.each do |troquel| %>
+        <% if troquel.baja == true %>
+          <tr>
+            <td><%= link_to "#{Troquel::CATEGORIA[troquel.categoria]} #{troquel.numero}", troquel_path(troquel) %></td>
+            <td><%= troquel.desarrollo%></td>
+            <td><%= troquel.medida_cerrada%></td>
+            <td><%= troquel.imagen%></td>
+            <td><%= troquel.texto%></td>
+            <td><%= troquel.stock%></td>
+            <td><%= troquel.maquina%></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

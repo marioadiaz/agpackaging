@@ -1,0 +1,40 @@
+<div id="<%= dom_id troquel %>">
+    <div class="card-body">
+        <ul class="list-unstyled mt-3 mb-4 text-left">
+        <h3>
+          <strong>Código:</strong>
+          <%= Troquel::CATEGORIA[troquel.categoria] %>  <%= troquel.numero %>
+        </h3>
+        
+        <h3>
+          <strong>Desarrollo:</strong>
+          <%= troquel.desarrollo %>
+        </h3>
+
+        <h3>
+          <strong>Medida cerrrada:</strong>
+          <%= troquel.medida_cerrada %>
+        </h3>
+
+        <h3>
+          <strong>Imagen:</strong>
+          <%= troquel.imagen %>
+        </h3>
+
+        <h3>
+          <strong>Texto:</strong>
+          <%= troquel.texto %>
+        </h3>
+
+        <h3>
+          <strong>Stock:</strong>
+          <%= troquel.stock %>
+        </h3>
+
+        <h3>
+          <strong>Maquina:</strong>
+          <%= troquel.maquina %>
+        </h3>    
+      </ul>
+    </div>
+</div>
