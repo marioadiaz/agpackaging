@@ -64,8 +64,6 @@ Generar controladores
 Agregar en routes.rb
 3.-devise_for :users, :controllers => { registrations: 'users/registrations' }
 
-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
-
 [Simple Form] Simple Form is not configured in the application and will use the default values. Use `rails generate simple_form:install` to generate the Simple Form configuration.
       create  config/initializers/devise.rb
       create  config/locales/devise.en.yml
@@ -143,3 +141,6 @@ rails generate migration AddUniqueConstraintToNumeroInTroqueles
   add_index :troqueles, :numero, unique: true
 
 #rails destroy scaffold Troqueles
+rails generate migration ChangeImagenTypeInTroquels
+    change_column :troquels, :imagen, :binary
+

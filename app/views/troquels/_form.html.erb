@@ -31,8 +31,10 @@
           </div>
           <div class="form-group">
             <div class="col-md-4">
-              <label for="imagen">Imagen</label>
-              <%= f.input :imagen, :label => false, required: true, autofocus: true, :input_html => { :class => "form-group"}%>
+              <div class="field">
+                <%= f.label :imagen %>
+                <%= f.file_field :imagen %>
+              </div>
             </div>
           </div>
           <div class="form-group">

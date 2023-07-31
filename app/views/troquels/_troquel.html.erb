@@ -15,10 +15,18 @@
           <strong>Medida cerrrada:</strong>
           <%= troquel.medida_cerrada %>
         </h3>
-
         <h3>
           <strong>Imagen:</strong>
-          <%= troquel.imagen %>
+          <% if troquel.imagen.present? %>
+            <% if troquel.imagen.attached? %>
+              <p>
+                <strong>Imagen:</strong>
+                <%= image_tag troquel.imagen, style: "max-width: 100px; height: auto;"%>
+              </p>
+            <% else %>
+              <p>No hay imagen disponible.</p>
+            <% end %>
+          <% end %>  
         </h3>
 
         <h3>

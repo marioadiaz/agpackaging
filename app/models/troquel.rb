@@ -1,5 +1,7 @@
 class Troquel < ApplicationRecord
 	validates :numero, uniqueness: true
+	has_one_attached :imagen
+	
 	MAQUINA = ["ETERNA", "PLANA", "MINERVA"]
 	CATEGORIA = {0=>"SIN CATEGORIA",1=>"CB",2=>"CD",2=>"CE",3=>"BOL",4=>"TE"}
 

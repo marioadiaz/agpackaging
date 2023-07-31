@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_30_171445) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_31_025743) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,7 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_30_171445) do
     t.integer "numero"
     t.string "desarrollo"
     t.string "medida_cerrada"
-    t.text "imagen"
+    t.binary "imagen"
     t.string "texto"
     t.integer "stock"
     t.string "maquina"
