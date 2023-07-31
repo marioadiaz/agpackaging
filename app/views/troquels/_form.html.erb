@@ -50,7 +50,8 @@
           <div class="form-group">
             <div class="col-md-4">
               <label for="maquina">Máquina</label>
-              <%= f.input :maquina, :label => false, required: true, autofocus: true, :input_html => { :class => "form-group"}%>
+              <%= f.select :maquina, Troquel::MAQUINA, selected: (@troquel.maquina || "SIN CATEGORIA"), label: false, autofocus: true, input_html: { class: "form-group" } %>
+
             </div>
           </div>
         </div>

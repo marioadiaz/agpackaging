@@ -2,6 +2,12 @@
   <h2>Troqueles</h2>
   <p style="color: green"><%= notice %></p>
   <div class="d-flex my-2">
+    <!-- app/views/troquels/index.html.erb -->
+    <%= form_tag import_troquels_path, multipart: true do %>
+      <%= file_field_tag :file %>
+      <%= submit_tag 'Importar' %>
+    <% end %>
+
     <div class="flex-grow-1">
       <input class="form-control" id="buscador_datos" type="text" placeholder="Buscar troqueles">
     </div>

@@ -7,11 +7,22 @@ class TroquelsController < ApplicationController
   end
 
   def import
-    file = params[:troquel][:file]
-    Troquel.import(file)
-    redirect_to troquels_path, notice: 'La importación se ha realizado exitosamente.'
-  rescue StandardError => e
-    redirect_to troquels_path, alert: "Error en la importación: #{e.message}"
+    if params[:file].present?
+      spreadsheet = open_spreadsheet(params[:file])
+      header = spreadsheet.row(1)
+
+      (2..spreadsheet.last_row).each do |i|
+        row = Hash[[header, spreadsheet.row(i)].transpose]
+        troquel = Troquel.new(row)
+        troquel.update baja: true
+
+        troquel.save
+      end
+
+      redirect_to troquels_path, notice: 'Archivo importado exitosamente.'
+    else
+      redirect_to troquels_path, alert: 'No se seleccionó ningún archivo.'
+    end
   end
 
   # GET /troquels/1 or /troquels/1.json
@@ -66,8 +77,16 @@ class TroquelsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
   private
+    def open_spreadsheet(file)
+      case File.extname(file.original_filename)
+      when '.csv' then Roo::CSV.new(file.path)
+      when '.xls' then Roo::Excel.new(file.path)
+      when '.xlsx' then Roo::Excelx.new(file.path)
+      else raise "Tipo de archivo desconocido: #{file.original_filename}"
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_troquel
       @troquel = Troquel.find(params[:id])
