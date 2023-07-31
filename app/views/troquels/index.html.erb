@@ -2,6 +2,11 @@
   <h2>Troqueles</h2>
   <p style="color: green"><%= notice %></p>
   <div class="d-flex my-2">
+    <%= form_tag import_troquels_path, multipart: true, class: "form-inline" do %>
+      <%= file_field_tag :file, class: "form-control-file" %>
+      <%= submit_tag 'Importar', class: "btn btn-primary mx-2" %>
+    <% end %>
+
     <div class="flex-grow-1">
       <input class="form-control" id="buscador_datos" type="text" placeholder="Buscar troqueles">
     </div>
@@ -39,7 +44,16 @@
             <td><%= link_to "#{Troquel::CATEGORIA[troquel.categoria]} #{troquel.numero}", troquel_path(troquel) %></td>
             <td><%= troquel.desarrollo%></td>
             <td><%= troquel.medida_cerrada%></td>
-            <td><%= troquel.imagen%></td>
+            <td><% if troquel.imagen.present? %>
+                  <% if troquel.imagen.attached? %>
+                    <p>
+                      <%= image_tag troquel.imagen, style: "max-width: 100px; height: auto;"%>
+                    </p>
+                  <% else %>
+                    <p>No hay imagen disponible.</p>
+                  <% end %>
+                <% end %>
+            </td>
             <td><%= troquel.texto%></td>
             <td><%= troquel.stock%></td>
             <td><%= troquel.maquina%></td>
