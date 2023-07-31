@@ -1,0 +1,6 @@
+<!-- app/views/troquels/import.html.erb -->
+
+<%= form_with(url: import_troquels_path, multipart: true) do |form| %>
+  <%= form.file_field :file %>
+  <%= form.submit 'Importar' %>
+<% end %>

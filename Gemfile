@@ -28,7 +28,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 4.0"
+gem "redis", "~> 4.0"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -71,10 +71,13 @@ group :test do
   gem "webdrivers"
 end
 
-  # bootstrap 5
-  gem "bootstrap"
-  # Use Sass to process CSS
-  gem "sassc-rails"
-  gem 'actioncable', '~> 7.0'
+# bootstrap 5
+gem "bootstrap"
+# Use Sass to process CSS
+gem "sassc-rails"
+gem 'actioncable', '~> 7.0'
 
-  gem 'activestorage'
+gem 'activestorage'
+gem 'simple_form'
+gem 'jquery-rails'
+gem 'roo'
