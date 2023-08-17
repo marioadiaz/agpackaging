@@ -69,8 +69,9 @@ class TroquelsController < ApplicationController
 
   # DELETE /troquels/1 or /troquels/1.json
   def destroy
-    @troquel = Troquel.find(params[:id])
-    @troquel.update baja: false
+    #@troquel = Troquel.find(params[:id])
+    #@troquel.update baja: false
+    @troquel.destroy
 
     respond_to do |format|
       format.html { redirect_to troquels_url, notice: "Troquel was successfully destroyed." }
